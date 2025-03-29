@@ -1,0 +1,151 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Products - Digmore">
+  <main>
+    <!-- Hero Banner -->
+    <section class="bg-[rgb(29,29,29)] text-white py-16">
+      <div class="container mx-auto px-4">
+        <h1 class="text-5xl font-bold text-center mb-4 uppercase tracking-tight">Our Products</h1>
+        <p class="text-xl text-center max-w-2xl mx-auto">High-quality excavator teeth and wear parts for various equipment brands</p>
+      </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {[
+            {
+              name: "JCB TOOTH",
+              partNo: "531-03205",
+              weight: 2.4
+            },
+            {
+              name: "JCB SIDECUTTER",
+              partNo: "531-03208 & 531-03209",
+              weight: 4.8
+            },
+            {
+              name: "CAT 424 TOOTH",
+              partNo: "6Y6335",
+              weight: 3.6
+            },
+            {
+              name: "CAT 424 SIDECUTTER",
+              partNo: "227-8664 & 227-8665",
+              weight: 5.3
+            },
+            {
+              name: "PC71/EX70 TOOTH",
+              partNo: "20X-70-14160",
+              weight: 2.2
+            },
+            {
+              name: "PC71/EX70 ADOPTER",
+              partNo: "20X-70-14151",
+              weight: 2.6
+            },
+            {
+              name: "PC200 TOOTH (N)",
+              partNo: "205-70-29570A",
+              weight: 4.4
+            },
+            {
+              name: "PC200 TOOTH (RC)",
+              partNo: "205-70-19570RCN2",
+              weight: 5.6
+            },
+            {
+              name: "PC200 ADOPTER",
+              partNo: "939-7120",
+              weight: 8.6
+            },
+            {
+              name: "PC300 TOOTH (N)",
+              partNo: "207-70-14151-A",
+              weight: 7.3
+            },
+            {
+              name: "PC300 TOOTH (RC)",
+              partNo: "207-70-14151-RC",
+              weight: 9.0
+            },
+            {
+              name: "EX200 TOOTH (N)",
+              partNo: "TB00705-1512",
+              weight: 7.3
+            },
+            {
+              name: "EX200 TOOTH (RC)",
+              partNo: "T00705-130410RC",
+              weight: 7.3
+            },
+            {
+              name: "EX200 ADOPTER",
+              partNo: "TB00704-1",
+              weight: 10.5
+            },
+            {
+              name: "HYUNDAI 210 TOOTH RC",
+              partNo: "2713-9038RC",
+              weight: 8.4
+            },
+            {
+              name: "CAT 320/JS210(N) TOOTH",
+              partNo: "1U3352",
+              weight: 6.6
+            },
+            {
+              name: "CAT 320/JS210(RC) TOOTH",
+              partNo: "1U3352-RC",
+              weight: 8.1
+            },
+            {
+              name: "HM 2021 TOOTH",
+              partNo: "2021",
+              weight: 8.5
+            },
+            {
+              name: "JCB TOOTH KIT",
+              weight: 19.5
+            }
+          ].map(product => (
+            <div class="bg-white border border-gray-200 hover:border-primary shadow-sm hover:shadow-md transition-all duration-300 p-6 text-center">
+              <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span class="text-3xl font-bold text-primary">{product.name.substring(0, 1)}</span>
+              </div>
+              <h3 class="text-xl font-bold mb-4 text-black uppercase tracking-tight hover:text-primary transition-colors duration-300">{product.name}</h3>
+              <div class="space-y-2">
+                {product.partNo && (
+                  <p class="text-gray-700">Part No: <span class="font-medium">{product.partNo}</span></p>
+                )}
+                <p class="text-gray-700">Weight: <span class="font-medium">{product.weight} Kg</span></p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-[rgb(29,29,29)]">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-4xl font-bold text-white mb-8 uppercase tracking-tight">Ready to Upgrade Your Equipment?</h2>
+        <p class="text-xl text-gray-300 mb-8">Browse our complete catalog and find the perfect match for your excavator</p>
+        <div class="flex justify-center gap-4 mb-12">
+          <a href="/products" class="bg-primary text-black px-8 py-4 rounded-md font-semibold hover:bg-yellow-500 transition uppercase tracking-wide text-sm">
+            View Products
+          </a>
+          <a href="/contact" class="bg-dark text-white px-8 py-4 rounded-md font-semibold hover:bg-black transition uppercase tracking-wide text-sm">
+            Contact Sales
+          </a>
+        </div>
+        <p class="text-3xl font-medium text-white">
+          <span class="text-primary font-bold">Digmore</span>, Build More!
+        </p>
+      </div>
+    </section>
+  </main>
+</Layout>
