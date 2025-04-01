@@ -1,5 +1,6 @@
 # build output
 build/
+dist/
 
 # generated types
 .astro/
@@ -25,3 +26,16 @@ pnpm-debug.log*
 
 # IDE specific files
 .vscode/
+
+# Large files
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.svg
+*.ico
+*.pdf
+*.zip
+*.tar
+*.gz
