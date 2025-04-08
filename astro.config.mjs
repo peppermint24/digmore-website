@@ -5,7 +5,7 @@ export default defineConfig({
   integrations: [tailwind()],
   build: {
     assets: '_astro',
-    inlineStylesheets: 'auto'
+    inlineStylesheets: 'always'
   },
   compressHTML: true,
   outDir: './docs',
