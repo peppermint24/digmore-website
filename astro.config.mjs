@@ -9,5 +9,5 @@ export default defineConfig({
   },
   compressHTML: true,
   outDir: './docs',
-  base: '/'
+  base: '/digmore-website'
 });
