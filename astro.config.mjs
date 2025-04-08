@@ -4,10 +4,15 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   integrations: [tailwind()],
   build: {
-    assets: 'assets',
-    inlineStylesheets: 'always'
+    assets: '_astro',
+    inlineStylesheets: 'auto'
   },
   compressHTML: true,
   outDir: './docs',
-  base: '/'
+  base: '/',
+  vite: {
+    build: {
+      cssCodeSplit: false
+    }
+  }
 });
