@@ -5,9 +5,9 @@ export default defineConfig({
   integrations: [tailwind()],
   build: {
     assets: 'assets',
-    inlineStylesheets: 'never'
+    inlineStylesheets: 'always'
   },
   compressHTML: true,
   outDir: './docs',
-  base: '/digmore-website'
+  base: '/'
 });
