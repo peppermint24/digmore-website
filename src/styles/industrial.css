@@ -1,0 +1,138 @@
+/* Digmore industrial theme: dark framing, light product content.
+   JCB is a visual reference only; no JCB assets, logo or proprietary typefaces.
+   Loaded after earthworks.css and scoped to the homepage layout. */
+body.earthworks-site {
+  --ew-paper: #f2f3f1;
+  --ew-ink: #24282a;
+  --ew-muted: #5b6268;
+  --ew-line: #d4d8d7;
+  --ew-amber: #f0b323;
+  --ew-white: #ffffff;
+  --ew-header: #15181a;
+  --ew-night: #1b1e21;
+  --ew-charcoal: #272c30;
+  --ew-on-dark: #f6f7f5;
+  --ew-muted-dark: #bec4c7;
+  --ew-line-dark: #42484c;
+  --ew-focus-light: #815900;
+  --ew-hover-amber: #ffca48;
+  --ew-hover-light: #e6e9e5;
+  background: var(--ew-paper);
+  color: var(--ew-ink);
+}
+
+/* Dark sections inherit their own secondary text and divider colors. */
+.site-header, .hero, .range-strip, .application-section, .site-footer {
+  --ew-muted: var(--ew-muted-dark);
+  --ew-line: var(--ew-line-dark);
+  color: var(--ew-on-dark);
+}
+.site-header {
+  background: var(--ew-header);
+  border-bottom-color: var(--ew-line-dark);
+}
+.brand-stop { color: var(--ew-amber); }
+.brand-mark { background: var(--ew-amber); border-left-color: var(--ew-header); }
+.desktop-nav { gap: 36px; }
+.desktop-nav > a:not(.nav-contact):hover { color: var(--ew-amber); }
+.earthworks-site .nav-contact {
+  background: var(--ew-amber);
+  color: var(--ew-ink);
+  padding: 13px 22px;
+  border: 0;
+  gap: 28px;
+  transition: background .18s ease;
+}
+.earthworks-site .nav-contact:hover { background: var(--ew-hover-amber); }
+
+/* Preserve the selected photo and split composition, not an all-black page. */
+.hero { max-width: none; background: var(--ew-night); }
+.hero h1 > span { color: var(--ew-amber); }
+.hero .eyebrow { color: var(--ew-muted-dark); }
+.status-dot { background: var(--ew-amber); }
+.hero-description { color: var(--ew-on-dark); }
+.hero .button-dark {
+  background: var(--ew-amber);
+  color: var(--ew-ink) !important;
+}
+.hero .button-dark:hover { background: var(--ew-hover-amber); }
+.hero .text-link { border-bottom-color: #737a80; }
+.hero .text-link:hover { color: var(--ew-amber); border-bottom-color: var(--ew-amber); }
+.hero-bottom > a { border-color: #737a80; border-radius: 0; }
+.hero-bottom > a:hover { color: var(--ew-amber); border-color: var(--ew-amber); }
+.hero-image-wrap { background: var(--ew-charcoal); }
+.hero-image { filter: brightness(.94) saturate(.94); }
+.hero-image-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #1b1e211e, transparent 35%), linear-gradient(0deg, #1b1e211a, transparent 40%);
+  pointer-events: none;
+}
+.image-corner-label {
+  z-index: 1;
+  background: var(--ew-header);
+  color: var(--ew-on-dark);
+  border-top: 3px solid var(--ew-amber);
+}
+.hero-visual figcaption { background: var(--ew-night); }
+.hero-visual figcaption a:hover { color: var(--ew-on-dark); }
+.range-strip {
+  background: var(--ew-charcoal);
+  border-top: 2px solid var(--ew-amber);
+  border-bottom: 1px solid var(--ew-line-dark);
+}
+.strip-plus { color: var(--ew-amber); }
+.strip-note { color: var(--ew-muted-dark); }
+
+/* Neutral light sections keep the catalogue easy to scan. */
+.product-range, .closing-section { background: var(--ew-paper); }
+.product-row:hover { background: var(--ew-hover-light); }
+.round-arrow { border-radius: 0; }
+.product-row:hover .round-arrow { background: var(--ew-amber); border-color: var(--ew-amber); }
+.earthworks-site .text-link:hover { border-bottom-color: currentColor; }
+.button-dark:hover { background: #3c4246; }
+.button-amber:hover { background: var(--ew-hover-amber); }
+.application-section { background: var(--ew-charcoal); }
+.application-intro > .eyebrow { color: var(--ew-muted-dark); }
+.application-intro > p:not(.eyebrow), .fit-steps p { color: var(--ew-muted-dark); }
+.fit-steps > div, .fit-steps > div:last-child { border-color: var(--ew-line-dark); }
+.site-footer { background: var(--ew-header); border-top-color: var(--ew-line-dark); }
+.footer-top nav a:hover, .footer-contact a:hover { color: var(--ew-amber); }
+
+/* Contrasting keyboard focus on both light and dark surfaces. */
+.earthworks-site a:focus-visible, .earthworks-site summary:focus-visible {
+  outline: 3px solid var(--ew-focus-light);
+  outline-offset: 6px;
+}
+.earthworks-site :is(.site-header, .hero, .range-strip, .application-section, .site-footer) :is(a, summary):focus-visible {
+  outline-color: var(--ew-amber);
+}
+.earthworks-site .skip-link {
+  background: var(--ew-amber);
+  color: var(--ew-ink) !important;
+  outline-color: var(--ew-focus-light);
+}
+.earthworks-site ::selection { background: var(--ew-amber); color: var(--ew-ink); }
+
+@media(max-width:799px) {
+  .mobile-nav nav {
+    background: var(--ew-header);
+    border-bottom-color: var(--ew-line-dark);
+    box-shadow: 0 12px 18px #00000026;
+  }
+  .mobile-nav nav > a:hover { color: var(--ew-amber); }
+  .hero-image-wrap::after { background: linear-gradient(0deg, #1b1e211a, transparent 40%); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .earthworks-site *, .earthworks-site *::before, .earthworks-site *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+@media(forced-colors:active) {
+  .earthworks-site .button, .earthworks-site .nav-contact, .round-arrow, .hero-bottom > a { border: 1px solid ButtonText; }
+  .hero-image { filter: none; }
+  .hero-image-wrap::after { display: none; }
+  .earthworks-site a:focus-visible, .earthworks-site summary:focus-visible { outline-color: Highlight !important; }
+}
