@@ -1,0 +1,154 @@
+/* Homepage-only. Reference measurements and font substitution: REFERENCE-ALIGNMENT.md.
+   One design system, replacing the earlier light sheet plus dark overrides. */
+body.earthworks-site {
+  --ew-bg: #262626;
+  --ew-panel: #181818;
+  --ew-raised: #3e3e3e;
+  --ew-text: #f2f2f2;
+  --ew-muted: #bcbcbc;
+  --ew-line: #666666;
+  --ew-amber: #fcb026;
+  --ew-hover: #e19d22;
+  --ew-body: 'Saira', Arial, Helvetica, sans-serif;
+  --ew-display: 'Saira Semi Condensed', 'Saira', Arial, sans-serif;
+  margin: 0;
+  background: var(--ew-bg);
+  color: var(--ew-text);
+  color-scheme: dark;
+  font-family: var(--ew-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  -webkit-font-smoothing: antialiased;
+}
+.earthworks-site *, .earthworks-site *::before, .earthworks-site *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+.earthworks-site :where(h1,h2,h3,p,figure) { margin: 0; }
+.earthworks-site a { color: inherit; text-decoration: none; }
+.earthworks-site :is(a,summary):focus-visible { outline: 3px solid var(--ew-amber); outline-offset: 5px; }
+.earthworks-site ::selection { background: var(--ew-amber); color: var(--ew-bg); }
+.earthworks-site h1, .earthworks-site h2, .earthworks-site h3 {
+  font-family: var(--ew-display);
+  font-weight: 700;
+  letter-spacing: normal;
+  text-transform: none;
+  text-wrap: balance;
+}
+.earthworks-site h2 { font-size: 37px; line-height: 44px; }
+.earthworks-site h3 { font-size: 25px; line-height: 30px; }
+.container { width: min(100% - 96px, 1344px); margin-inline: auto; }
+.skip-link { position: absolute; top: -120px; left: 16px; z-index: 100; padding: 16px; background: var(--ew-amber); color: var(--ew-bg)!important; }
+.skip-link:focus { top: 12px; }
+.site-header { position: relative; z-index: 20; background: var(--ew-bg); border-bottom: 1px solid #3e3e3e; }
+.header-inner { width: min(100% - 96px, 1344px); margin-inline: auto; min-height: 112px; padding-block: 8px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+.desktop-nav { display: flex; align-items: center; gap: 48px; font-size: 18px; font-weight: 700; line-height: 27px; }
+.desktop-nav>a:not(.button) { padding-block: 12px; }
+.desktop-nav>a:not(.button):hover { color: var(--ew-amber); }
+.mobile-nav { display: none; }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 16px; padding: 20px 16px; border: 1px solid transparent; border-radius: 4px; font-size: 18px; line-height: 27px; font-weight: 700; text-align: center; transition: background-color .2s ease, border-color .2s ease, color .2s ease; }
+.earthworks-site .button-primary { color: var(--ew-bg); background: var(--ew-amber); border-color: var(--ew-amber); }
+.earthworks-site .button-primary:hover { background: var(--ew-hover); border-color: var(--ew-hover); }
+.earthworks-site .button-outline { color: var(--ew-text); border-color: var(--ew-text); background: transparent; }
+.earthworks-site .button-outline:hover { background: var(--ew-raised); }
+.nav-contact { padding: 12px 20px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; background: var(--ew-panel); }
+.hero-copy { padding: 80px 48px 88px max(48px, calc((100vw - 1344px)/2)); align-self: center; min-width: 0; }
+.eyebrow { color: var(--ew-amber); font-size: 16px; line-height: 24px; font-weight: 600; margin-bottom: 20px!important; }
+.hero h1 { font-size: 64px; line-height: 76px; color: var(--ew-text); }
+.hero-description { margin-top: 24px!important; font-size: 20px; line-height: 30px; font-weight: 600; }
+.hero-detail { color: var(--ew-muted); margin-top: 16px!important; max-width: 46ch; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 32px; }
+.hero-visual { position: relative; min-width: 0; min-height: 660px; overflow: hidden; background: var(--ew-raised); }
+.hero-image { width: 100%; height: 100%; position: absolute; inset: 0; display: block; object-fit: cover; object-position: 50% 45%; }
+.photo-credit { display: flex; justify-content: flex-end; padding-top: 12px; font-size: 12px; line-height: 18px; color: var(--ew-muted); }
+.photo-credit a:hover { text-decoration: underline; }
+.section { padding-block: 80px; }
+.section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 32px; }
+.section-heading p { color: var(--ew-muted); margin-top: 16px!important; }
+.text-link { display: inline-flex; align-items: center; gap: 12px; font-size: 16px; font-weight: 700; line-height: 24px; padding-block: 10px; color: var(--ew-amber)!important; }
+.text-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+.product-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; }
+.product-card { display: flex; flex-direction: column; align-items: flex-start; padding: 32px; border-radius: 4px; background: var(--ew-raised); border: 1px solid var(--ew-raised); transition: border-color .2s ease; }
+.product-card:hover { border-color: var(--ew-amber); }
+.product-card:hover h3 { color: var(--ew-amber); }
+.product-card>p { color: var(--ew-muted); margin-top: 16px; }
+.product-card .product-models { font-size: 14px; line-height: 21px; margin-top: 24px; margin-bottom: 28px; }
+.card-link { display: flex; justify-content: space-between; align-items: center; gap: 16px; color: var(--ew-amber); font-weight: 700; width: 100%; margin-top: auto; }
+.range-footnote { font-size: 14px; line-height: 21px; color: var(--ew-muted); margin-top: 24px!important; }
+.application-section { background: var(--ew-panel); padding-block: 80px; }
+.application-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: center; }
+.application-intro>p:not(.eyebrow) { color: var(--ew-muted); max-width: 48ch; margin-top: 24px; }
+.application-intro>.button { margin-top: 32px; }
+.fit-steps { list-style: none; counter-reset: steps; margin: 0; padding: 0; }
+.fit-steps>li { counter-increment: steps; position: relative; padding: 24px 0 24px 52px; border-top: 1px solid var(--ew-line); }
+.fit-steps>li:last-child { border-bottom: 1px solid var(--ew-line); }
+.fit-steps>li::before { content: counter(steps,decimal-leading-zero); position: absolute; left: 0; top: 25px; color: var(--ew-amber); font-size: 18px; font-weight: 600; line-height: 27px; }
+.fit-steps p { color: var(--ew-muted); margin-top: 12px; }
+.closing-section { display: flex; justify-content: space-between; align-items: center; gap: 48px; }
+.closing-section p { color: var(--ew-muted); margin-top: 20px; }
+.closing-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; flex-shrink: 0; }
+.site-footer { background: var(--ew-panel); padding-block: 64px 24px; }
+.footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 48px; padding-bottom: 48px; }
+.footer-top nav,.footer-contact { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.footer-top h2 { font-family: var(--ew-body); font-size: 18px; line-height: 27px; margin-bottom: 8px; }
+.footer-top p { margin-top: 16px; color: var(--ew-muted); }
+.footer-top a:hover { color: var(--ew-amber); }
+.footer-bottom { border-top: 1px solid var(--ew-line); display: flex; justify-content: space-between; gap: 32px; padding-top: 24px; font-size: 12px; line-height: 18px; color: var(--ew-muted); }
+@media (min-width: 800px) and (max-width: 1100px) {
+  .container,.header-inner { width: calc(100% - 64px); }
+  .desktop-nav { gap: 28px; }
+  .hero-copy { padding: 64px 32px; }
+  .hero h1 { font-size: 54px; line-height: 64px; }
+  .hero-visual { min-height: 680px; }
+  .product-grid { gap: 16px; }
+  .product-card { padding: 24px; }
+  .application-inner { gap: 48px; }
+}
+@media(max-width:799px) {
+  .container,.header-inner { width: calc(100% - 40px); }
+  .header-inner { min-height: 96px; gap: 16px; }
+  .desktop-nav { display: none; }
+  .mobile-nav { display: block; }
+  .mobile-nav summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 16px; font-size: 16px; font-weight: 700; min-height: 48px; }
+  .mobile-nav summary::-webkit-details-marker { display: none; }
+  .menu-symbol { font-size: 28px; font-weight: 400; }
+  .mobile-nav[open] .menu-symbol { transform: rotate(45deg); }
+  .mobile-nav nav { position: absolute; inset: 100% 0 auto; background: var(--ew-bg); padding: 16px 20px 24px; border-bottom: 1px solid var(--ew-line); box-shadow: 0 12px 18px #00000033; }
+  .mobile-nav nav>a { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--ew-line); font-weight: 600; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-copy { padding: 48px 20px; }
+  .hero h1 { font-size: 44px; line-height: 52px; }
+  .hero-description { font-size: 18px; line-height: 27px; }
+  .hero-detail { max-width: 55ch; }
+  .hero-visual { min-height: 0; aspect-ratio: 4/5; max-height: 720px; }
+  .hero-image { object-position: 50% 45%; }
+  .photo-credit { font-size: 11px; line-height: 18px; text-align: right; }
+  .button { padding: 16px; font-size: 16px; line-height: 24px; }
+  .hero-actions { gap: 12px; }
+  .section,.application-section { padding-block: 48px; }
+  .earthworks-site h2 { font-size: 31px; line-height: 37px; }
+  .section-heading { align-items: flex-start; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+  .product-grid { grid-template-columns: 1fr; gap: 20px; }
+  .product-card { padding: 28px; }
+  .application-inner { grid-template-columns: 1fr; gap: 48px; }
+  .closing-section { flex-direction: column; align-items: flex-start; gap: 28px; }
+  .closing-actions { align-items: flex-start; }
+  .site-footer { padding-top: 48px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-top>div:first-child { grid-column: 1/-1; }
+  .footer-top h2 { font-size: 16px; line-height: 24px; }
+  .footer-top a,.footer-top p { font-size: 14px; line-height: 21px; }
+  .footer-bottom { flex-direction: column; gap: 16px; }
+}
+@media (max-width: 374px) {
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .footer-top { grid-template-columns: 1fr; }
+}
+@media(prefers-reduced-motion:reduce) {
+  html { scroll-behavior: auto; }
+  .earthworks-site *, .earthworks-site *::before, .earthworks-site *::after { transition: none!important; animation: none!important; }
+}
+@media(forced-colors:active) {
+  .earthworks-site .button,.earthworks-site .product-card { border: 1px solid ButtonText; }
+  .earthworks-site :is(a,summary):focus-visible { outline-color: Highlight; }
+}

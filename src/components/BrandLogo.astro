@@ -1,0 +1,43 @@
+---
+interface Props {
+  variant?: 'header' | 'footer';
+}
+const { variant = 'header' } = Astro.props;
+---
+<!-- User-supplied artwork. Preserve the full emblem and its original white background. -->
+<a class:list={['brand-logo-link', `brand-logo-link--${variant}`]} href="/" aria-label="Digmore home">
+  <img
+    class="brand-logo"
+    src="/images/brand/digmore-logo.webp"
+    alt="Digmore — Dig more, build more!"
+    width="384"
+    height="384"
+    loading="eager"
+    decoding="async"
+  />
+</a>
+<style>
+  .brand-logo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 96px;
+    height: 96px;
+    line-height: 0;
+    background: #fff;
+  }
+  .brand-logo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .brand-logo-link--footer { width: 192px; height: 192px; }
+  @media (max-width: 799px) {
+    .brand-logo-link--header { width: 80px; height: 80px; }
+  }
+  @media (forced-colors: active) {
+    .brand-logo-link { outline: 1px solid CanvasText; }
+  }
+</style>
