@@ -1,0 +1,50 @@
+name: Design review
+on:
+  push:
+    branches: [design/premium-earthworks]
+permissions:
+  contents: read
+concurrency:
+  group: design-review-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect public reference styles (diagnostic only)
+        continue-on-error: true
+        run: |
+          node --input-type=module <<'NODE'
+          const pageUrl = 'https://www.jcb.com/en-IN/';
+          const load = async (url) => {
+            const r = await fetch(url, { signal: AbortSignal.timeout(25000) });
+            if (!r.ok) throw new Error(`${r.status} ${url}`);
+            return r.text();
+          };
+          const html = await load(pageUrl);
+          const hrefs = [...html.matchAll(/<link\b[^>]*>/gi)].filter(m => /stylesheet/i.test(m[0])).map(m => m[0].match(/href=["']([^"']+)/i)?.[1]).filter(Boolean);
+          const cssUrls = [...new Set(hrefs.map(h => new URL(h.replaceAll('&amp;', '&'), pageUrl).href))].slice(0, 8);
+          console.log('REFERENCE_URL', pageUrl);
+          console.log('REFERENCE_STYLESHEETS', JSON.stringify(cssUrls));
+          for (const url of cssUrls) {
+            try {
+              const css = await load(url);
+              const fonts = [...new Set([...css.matchAll(/font-family\s*:\s*([^;}]+)/gi)].map(m => m[1]))];
+              const colors = {};
+              for (const m of css.matchAll(/#[0-9a-f]{3,8}\b/gi)) colors[m[0].toLowerCase()] = (colors[m[0].toLowerCase()] || 0) + 1;
+              const rules = [...css.matchAll(/([^{}]+)\{([^{}]+)\}/g)].filter(m => /(?:^|[\s,>])(?:h1|h2|h3|body)(?:[\s,.:#\[]|$)|heading|button|header|primary|navigation|font-face/i.test(m[1])).map(m => [m[1].trim(), m[2].trim()]).filter(([sel, body]) => /font|color|height|padding|radius/i.test(body)).slice(0, 100);
+              console.log('CSS_URL', url);
+              console.log('FONT_FAMILIES', JSON.stringify(fonts));
+              console.log('TOP_COLORS', JSON.stringify(Object.entries(colors).sort((a,b)=>b[1]-a[1]).slice(0,25)));
+              console.log('REFERENCE_RULES', JSON.stringify(rules).slice(0,30000));
+            } catch (e) { console.log('REFERENCE_UNAVAILABLE', url, e.message); }
+          }
+          NODE
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Source and palette tests
+        run: node --test tests/*.test.mjs
+      - name: Build Astro site (no publication)
+        run: npm run build
