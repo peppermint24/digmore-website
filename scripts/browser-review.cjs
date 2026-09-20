@@ -63,7 +63,10 @@ const out = 'design-review-results';
         assert.equal(await page.locator('.mobile-nav').evaluate(e => e.open), false);
         assert.ok(await summary.evaluate(e => document.activeElement === e));
         await summary.click();
-        await page.locator('h1').click();
+        // Click below the open panel, not a heading that the menu legitimately covers.
+        const panel = await page.locator('.mobile-nav nav').boundingBox();
+        assert.ok(panel);
+        await page.mouse.click(width - 8, panel.y + panel.height + 12);
         assert.equal(await page.locator('.mobile-nav').evaluate(e => e.open), false);
       }
       if ([390, 1440].includes(width)) await page.screenshot({ path: `${out}/homepage-${width}.png`, fullPage: true });
