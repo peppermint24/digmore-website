@@ -40,9 +40,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 24px; }
 .skip-link { position: absolute; top: -120px; left: 16px; z-index: 100; padding: 16px; background: var(--ew-amber); color: var(--ew-bg)!important; }
 .skip-link:focus { top: 12px; }
 .site-header { position: relative; z-index: 20; background: var(--ew-bg); border-bottom: 1px solid #3e3e3e; }
-.header-inner { width: min(100% - 96px, 1344px); margin-inline: auto; height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
-.wordmark { font-family: var(--ew-body); font-size: 30px; line-height: 36px; font-weight: 700; letter-spacing: -.5px; white-space: nowrap; }
-.wordmark>span { color: var(--ew-amber); }
+.header-inner { width: min(100% - 96px, 1344px); margin-inline: auto; min-height: 112px; padding-block: 8px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
 .desktop-nav { display: flex; align-items: center; gap: 48px; font-size: 18px; font-weight: 700; line-height: 27px; }
 .desktop-nav>a:not(.button) { padding-block: 12px; }
 .desktop-nav>a:not(.button):hover { color: var(--ew-amber); }
@@ -108,8 +106,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 24px; }
 }
 @media(max-width:799px) {
   .container,.header-inner { width: calc(100% - 40px); }
-  .header-inner { height: 76px; gap: 16px; }
-  .wordmark { font-size: 26px; line-height: 32px; }
+  .header-inner { min-height: 96px; gap: 16px; }
   .desktop-nav { display: none; }
   .mobile-nav { display: block; }
   .mobile-nav summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 16px; font-size: 16px; font-weight: 700; min-height: 48px; }
@@ -141,7 +138,6 @@ html { scroll-behavior: smooth; scroll-padding-top: 24px; }
   .footer-top>div:first-child { grid-column: 1/-1; }
   .footer-top h2 { font-size: 16px; line-height: 24px; }
   .footer-top a,.footer-top p { font-size: 14px; line-height: 21px; }
-  .footer-top .wordmark { font-size: 26px; line-height: 32px; }
   .footer-bottom { flex-direction: column; gap: 16px; }
 }
 @media (max-width: 374px) {

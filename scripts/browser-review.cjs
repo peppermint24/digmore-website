@@ -14,6 +14,9 @@ const out = 'design-review-results';
     page.on('pageerror', err => pageErrors.push(err.message));
     const response = await page.goto(base, { waitUntil: 'load', timeout: 60000 });
     assert.equal(response.status(), 200);
+    const logoResponse = await page.request.get(base + '/images/brand/digmore-logo.webp');
+    assert.equal(logoResponse.status(), 200, 'Supplied logo is served locally');
+    assert.match(logoResponse.headers()['content-type'], /^image\/webp/);
     const fonts = await page.evaluate(async () => {
       const loaded = await Promise.race([
         Promise.all([document.fonts.load('400 16px "Saira"'), document.fonts.load('700 64px "Saira Semi Condensed"')]),
@@ -27,7 +30,8 @@ const out = 'design-review-results';
       await page.setViewportSize({ width, height: 1000 });
       await page.waitForFunction(() => {
         const image = document.querySelector('.hero-image');
-        return image && image.complete && image.naturalWidth > 0;
+        const logos = [...document.querySelectorAll('.brand-logo')];
+        return image && image.complete && image.naturalWidth > 0 && logos.length === 2 && logos.every(logo => logo.complete && logo.naturalWidth === 384);
       }, null, { timeout: 25000 });
       const metrics = await page.evaluate(() => {
         const h1 = document.querySelector('h1');
@@ -42,6 +46,7 @@ const out = 'design-review-results';
           letterSpacing: h1s.letterSpacing, textTransform: h1s.textTransform,
           buttonBackground: bs.backgroundColor, buttonRadius: bs.borderRadius,
           heroImage: { naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight, currentSrc: image.currentSrc },
+          logos: [...document.querySelectorAll('.brand-logo')].map(logo => ({ naturalWidth: logo.naturalWidth, naturalHeight: logo.naturalHeight, width: logo.clientWidth, height: logo.clientHeight, fit: getComputedStyle(logo).objectFit, filter: getComputedStyle(logo).filter })),
           menuVisible: document.querySelector('.mobile-nav').getBoundingClientRect().width > 0,
         };
       });
@@ -54,6 +59,16 @@ const out = 'design-review-results';
       assert.ok(metrics.font.includes('Saira Semi Condensed'));
       assert.equal(metrics.headlineSize, width < 800 ? '44px' : width <= 1100 ? '54px' : '64px');
       assert.equal(metrics.menuVisible, width < 800);
+      assert.equal(metrics.logos.length, 2);
+      assert.equal(metrics.logos[0].width, width < 800 ? 80 : 96);
+      assert.equal(metrics.logos[1].width, 192);
+      for (const logo of metrics.logos) {
+        assert.equal(logo.naturalWidth, 384);
+        assert.equal(logo.naturalHeight, 384);
+        assert.equal(logo.width, logo.height);
+        assert.equal(logo.fit, 'contain');
+        assert.equal(logo.filter, 'none');
+      }
       results.push(metrics);
       if (width < 800) {
         const summary = page.locator('.mobile-nav summary');
@@ -87,7 +102,7 @@ const out = 'design-review-results';
     assert.ok(await nativePage.locator('.mobile-nav').evaluate(e => e.open), 'Native menu works without JS');
     await noJS.close();
     assert.deepEqual(pageErrors, [], 'No browser JavaScript exceptions');
-    const report = { fonts, viewports: results, pageErrors, routes: ['/products','/about','/contact'], menu: 'passed including no-JS', reducedMotion: 'passed', forcedColors: 'border check passed' };
+    const report = { fonts, viewports: results, pageErrors, routes: ['/products','/about','/contact'], logo: 'both locally served supplied-logo instances passed', menu: 'passed including no-JS', reducedMotion: 'passed', forcedColors: 'border check passed' };
     fs.writeFileSync(`${out}/report.json`, JSON.stringify(report, null, 2));
     console.log('BUILT_SITE_BROWSER_REVIEW', JSON.stringify(report));
   } catch (err) {
