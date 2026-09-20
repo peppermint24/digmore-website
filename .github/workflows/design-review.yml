@@ -15,46 +15,29 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Inspect public reference tokens (diagnostic only)
-        continue-on-error: true
-        run: |
-          node --input-type=module <<'NODE'
-          const r = await fetch('https://www.jcb.com/assets/css/main.css', {signal: AbortSignal.timeout(25000)});
-          if (!r.ok) throw new Error(`Reference CSS unavailable: ${r.status}`);
-          const css = await r.text();
-          for (const m of css.matchAll(/([^{}]+)\{([^{}]+)\}/g)) {
-            if (/--font-heading|--font-body|--type-heading-h1|--color-brand-100|--color-bg:|--color-fg:/.test(m[2]) && /:root|dark-mode|light-mode|body/.test(m[1])) console.log('REFERENCE_TOKENS', m[1].trim(), m[2]);
-          }
-          NODE
       - name: Install locked dependencies
         run: npm ci
       - name: Source and palette tests
         run: node --test tests/*.test.mjs
       - name: Build Astro site (no publication)
         run: npm run build
-      - name: Install isolated browser audit dependency
+      - name: Install isolated browser review dependency
         run: npm install --prefix "$RUNNER_TEMP/design-browser" --no-save --package-lock=false playwright@1.57.0
-      - name: Inspect reference in browser (diagnostic only)
-        continue-on-error: true
+      - name: Review built site with loaded photo and fonts
         env:
           NODE_PATH: ${{ runner.temp }}/design-browser/node_modules
         run: |
           export CHROME_BIN="$(command -v google-chrome || command -v chromium)"
-          node <<'NODE'
-          const {chromium}=require('playwright');
-          (async()=>{
-            const b=await chromium.launch({executablePath:process.env.CHROME_BIN,args:['--no-sandbox']});
-            try {
-              const p=await b.newPage({viewport:{width:1440,height:1000},colorScheme:'dark'});
-              await p.goto('https://www.jcb.com/en-IN/',{waitUntil:'domcontentloaded',timeout:45000});
-              await p.evaluate(()=>document.fonts.ready);
-              const data=await p.evaluate(()=>{
-                const props=['fontFamily','fontSize','fontWeight','lineHeight','letterSpacing','textTransform','color','backgroundColor','borderRadius','padding','height'];
-                const style=(el)=>el?Object.fromEntries(props.map(k=>[k,getComputedStyle(el)[k]])):null;
-                const visible=(selector)=>[...document.querySelectorAll(selector)].filter(e=>e.getBoundingClientRect().width&&e.getBoundingClientRect().height).slice(0,5).map(e=>({text:e.textContent.trim().slice(0,90),class:e.className,style:style(e)}));
-                return {url:location.href,bodyClass:document.body.className,body:style(document.body),h1:visible('h1'),h2:visible('h2'),navigation:visible('.c-primary-navigation__link'),buttons:visible('.c-button'),header:style(document.querySelector('header'))};
-              });
-              console.log('REFERENCE_COMPUTED',JSON.stringify(data));
-            } finally {await b.close();}
-          })().catch(e=>{console.error(e);process.exit(1)});
-          NODE
+          python3 -m http.server 4173 --bind 127.0.0.1 --directory docs > "$RUNNER_TEMP/design-server.log" 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID"' EXIT
+          for i in $(seq 1 20); do curl -fsS http://127.0.0.1:4173/ -o /dev/null && break || sleep 1; done
+          node scripts/browser-review.cjs
+      - name: Save screenshots and review results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: design-review-${{ github.sha }}
+          path: design-review-results/
+          if-no-files-found: warn
+          retention-days: 7

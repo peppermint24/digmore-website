@@ -1,6 +1,5 @@
 ---
 import '../styles/earthworks.css';
-import '../styles/industrial.css';
 
 interface Props {
   title: string;
@@ -8,7 +7,7 @@ interface Props {
 }
 const {
   title,
-  description = 'Explore Digmore excavator teeth, side cutters and adapters. Find the right wear part by machine model, part number and application.',
+  description = 'Explore Digmore excavator teeth, side cutters and adapters. Find wear parts by machine model, part number and application.',
 } = Astro.props;
 const year = new Date().getFullYear();
 ---
@@ -18,45 +17,50 @@ const year = new Date().getFullYear();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#15181a" />
+    <meta name="theme-color" content="#262626" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://images.pexels.com" />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
+    <!-- Saira is a substitute, not JCB's proprietary JCBEuro font. -->
+    <link href="https://fonts.googleapis.com/css2?family=Saira:wght@400;600;700&family=Saira+Semi+Condensed:wght@600;700&display=swap" rel="stylesheet" />
     <slot name="head" />
   </head>
   <body class="earthworks-site">
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header">
-      <a class="wordmark" href="/" aria-label="Digmore home"><span class="brand-mark" aria-hidden="true"></span>DIGMORE<span class="brand-stop" aria-hidden="true">.</span></a>
-      <nav class="desktop-nav" aria-label="Main navigation">
-        <a href="/products">Our products</a>
-        <a href="/about">About Digmore</a>
-        <a class="nav-contact" href="/contact">Talk to us <span aria-hidden="true">↗</span></a>
-      </nav>
-      <details class="mobile-nav" data-mobile-nav>
-        <summary>Menu <span class="menu-symbol" aria-hidden="true">+</span></summary>
-        <nav aria-label="Mobile navigation">
-          <a href="/products">Our products <span aria-hidden="true">↗</span></a>
-          <a href="/about">About Digmore <span aria-hidden="true">↗</span></a>
-          <a href="/contact">Talk to us <span aria-hidden="true">↗</span></a>
+      <div class="header-inner">
+        <a class="wordmark" href="/" aria-label="Digmore home">DIGMORE<span aria-hidden="true">.</span></a>
+        <nav class="desktop-nav" aria-label="Main navigation">
+          <a href="/products">Products</a>
+          <a href="/about">About Digmore</a>
+          <a class="button button-primary nav-contact" href="/contact">Contact sales</a>
         </nav>
-      </details>
+        <details class="mobile-nav" data-mobile-nav>
+          <summary>Menu <span class="menu-symbol" aria-hidden="true">+</span></summary>
+          <nav aria-label="Mobile navigation">
+            <a href="/products">Products <span aria-hidden="true">→</span></a>
+            <a href="/about">About Digmore <span aria-hidden="true">→</span></a>
+            <a href="/contact">Contact sales <span aria-hidden="true">→</span></a>
+          </nav>
+        </details>
+      </div>
     </header>
     <slot />
     <footer class="site-footer">
-      <div class="footer-top">
-        <div><a class="wordmark" href="/" aria-label="Digmore home">DIGMORE<span class="brand-stop" aria-hidden="true">.</span></a><p>The working end of your machine.</p></div>
-        <nav aria-label="Footer navigation"><a href="/products">Products</a><a href="/about">About us</a><a href="/contact">Contact</a></nav>
-        <div class="footer-contact"><span class="eyebrow">LET'S TALK PARTS</span><a href="tel:+919410105848">+91 94101 05848</a><a href="tel:+919897784255">+91 98977 84255</a></div>
+      <div class="container">
+        <div class="footer-top">
+          <div><a class="wordmark" href="/" aria-label="Digmore home">DIGMORE<span aria-hidden="true">.</span></a><p>Excavator teeth and wear parts.</p></div>
+          <nav aria-label="Footer navigation"><h2>Explore Digmore</h2><a href="/products">Products</a><a href="/about">About us</a><a href="/contact">Contact</a></nav>
+          <div class="footer-contact"><h2>Talk to our team</h2><a href="tel:+919410105848">+91 94101 05848</a><a href="tel:+919897784255">+91 98977 84255</a></div>
+        </div>
+        <div class="footer-bottom"><p>© {year} Digmore. All rights reserved.</p><p>Independent wear parts. Equipment brands are used for identification, not endorsement.</p></div>
       </div>
-      <div class="footer-bottom"><p>© {year} Digmore. All rights reserved.</p><p>Independent wear parts. Equipment brands are used for identification, not endorsement.</p></div>
     </footer>
     <script>
-      // Native details remains usable without JavaScript; these handlers add dismissal.
+      // Native details remains usable without JavaScript.
       const menu = document.querySelector<HTMLDetailsElement>('[data-mobile-nav]');
       const summary = menu?.querySelector('summary');
       document.addEventListener('keydown', (event) => {
